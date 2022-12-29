@@ -40,6 +40,7 @@ namespace DenemeSWE.Controllers
                 if (search.Length >= 3)
                 {
                     query = query.Where(x => x.title.Contains(search));
+                    
                 }
                 else
                 {
@@ -48,15 +49,6 @@ namespace DenemeSWE.Controllers
                 }
             }
             return View(await query.AsNoTracking().ToListAsync());
-        }
-        public ActionResult BookDetail(string id)
-        {
-            if (Session["name"] != null)
-            {
-                var book = db.Books.Where(x => x.book_id == id).FirstOrDefault();
-                return View(book);
-            }
-            return View();
         }
         [HttpGet]
         public ActionResult AddBook()
@@ -76,9 +68,13 @@ namespace DenemeSWE.Controllers
                 var userBook = db.Shelf.Where(x => x.user_id == id && x.book_id == bookId).FirstOrDefault();
                 if(userBook != null)
                 {
-                    ViewData["Error"] = "Your already have this book!";
+                    ViewData["HasBookError"] = "Your already have this book!";
                 }
-                else
+                else if (db.Shelf.Count(x => x.user_id == id) >= 7)
+                {
+                    ViewData["MaxBookError"] = "You can't have more than 7 books!";
+                }
+                else 
                 {
                     var book = db.Books.Where(x => x.book_id == bookId).FirstOrDefault();
                     var shelf = new Shelf();
@@ -148,98 +144,6 @@ namespace DenemeSWE.Controllers
             return Content("");
         }
     }
+    
 
-    /*[HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult AddBook(Books b)
-    {
-
-        if (ModelState.IsValid)
-        {
-
-            /*var book = db.Books.FirstOrDefault(a => a.book_id == b.book_id);
-            //var bo = db.Books.Find(b.book_id);
-            db.Shelf.Add(new Shelf
-            {
-                book_id = book.book_id,
-                title = book.title,
-                author = book.author,
-                category = book.category,
-                language = book.language,
-                photo = book.photo,
-                reading_link = null,
-                release_date = book.release_date,
-                subject = book.subject
-
-            });
-
-            db.SaveChanges();
-
-            return RedirectToAction("MyShelf","Shelf");*/
-
-    /*if (check == null)
-    {
-        db.Books.Add(book);
-        db.SaveChanges();
-        return RedirectToAction("BookList");
-    }
-    else
-    {
-        ModelState.AddModelError("", "This book is already in the library");
-    }
-
-    if (check == null)
-    {
-
-            //user.password = GetMD5(user.password);
-            db.Configuration.ValidateOnSaveEnabled = false;
-            db.Shelf.Add(shelf);
-            db.SaveChanges();
-            return RedirectToAction("BookList");
-    }
-    else
-    {
-        ViewData["AddFlag"] = "You already have the book!!";
-        return View();
-    }
-
-}
-return View();
-}
-return RedirectToAction("BookList");
-}
-public ActionResult RemoveBook()
-{
-return View();
-}
-
-[HttpPost]
-[ValidateAntiForgeryToken]
-public ActionResult RemoveBook(User user)
-{
-
-if (ModelState.IsValid)
-{
-    var check = db.User.FirstOrDefault(s => s.email == user.email);
-    if (check == null)
-    {
-           //user.password = GetMD5(user.password);
-            db.Configuration.ValidateOnSaveEnabled = false;
-            db.User.Add(user);
-            db.SaveChanges();
-            return RedirectToAction("MyShelf");
-
-    }
-    else
-    {
-        ViewData["SignupFlag"] = "Email already exists!!";
-        return View();
-    }
-
-}
-return View();
-}
-   
-}
-     */
 }

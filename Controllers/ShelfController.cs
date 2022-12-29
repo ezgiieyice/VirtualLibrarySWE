@@ -50,6 +50,27 @@ namespace DenemeSWE.Controllers
                 return RedirectToAction("Login", "User");
             }
         }
+        //kütüphanedeki var olan kitabı kaldırma
+        [HttpGet]
+        public ActionResult RemoveBook()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult RemoveBook(string bookId)
+        {
+            // shelfteki seçili kitabı kaldır
+            var book = db.Shelf.Where(x => x.book_id == bookId).FirstOrDefault();
+            db.Shelf.Remove(book);
+            db.SaveChanges();
 
-    }
+
+
+
+            return RedirectToAction("Myshelf");
+
+           
+        }
+
+    }/**/
 }
