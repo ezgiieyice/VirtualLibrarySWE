@@ -10,7 +10,7 @@ namespace DenemeSWE.Controllers
 {
     public class HomeController : Controller
     {
-        IheBookEntities1 db = new IheBookEntities1();
+        IheBookEntities5 db = new IheBookEntities5();
         public ActionResult Index()
         {
             return View();

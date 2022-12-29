@@ -14,6 +14,12 @@ namespace DenemeSWE.Models
     
     public partial class Books
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Books()
+        {
+            this.Shelf = new HashSet<Shelf>();
+        }
+    
         public double F1 { get; set; }
         public string book_id { get; set; }
         public string photo { get; set; }
@@ -24,5 +30,8 @@ namespace DenemeSWE.Models
         public string category { get; set; }
         public string release_date { get; set; }
         public string reading_link { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Shelf> Shelf { get; set; }
     }
 }

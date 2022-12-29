@@ -9,7 +9,7 @@ namespace DenemeSWE.Controllers
 {
     public class UserController : Controller
     {
-        IheBookEntities1 db = new IheBookEntities1();
+        IheBookEntities5 db = new IheBookEntities5();
         // GET: User
         public ActionResult Index()
         {
@@ -30,11 +30,19 @@ namespace DenemeSWE.Controllers
                     var check = db.User.FirstOrDefault(s => s.email == user.email);
                     if (check == null)
                     {
-                        //user.password = GetMD5(user.password);
-                        db.Configuration.ValidateOnSaveEnabled = false;
-                        db.User.Add(user);
-                        db.SaveChanges();
-                        return RedirectToAction("Login");
+                        if(user.password.Length >= 8) { 
+                            //user.password = GetMD5(user.password);
+                            db.Configuration.ValidateOnSaveEnabled = false;
+                            db.User.Add(user);
+                            db.SaveChanges();
+                            return RedirectToAction("Login");
+                        }
+                        else
+                        {
+                            ViewData["SignupFlag"] = "Password must be at least 8 characters";
+                            return View();
+
+                        }
                     }
                     else
                     {
@@ -59,8 +67,8 @@ namespace DenemeSWE.Controllers
                     var check = db.User.Where(a => a.email.Equals(user.email) && a.password.Equals(user.password)).FirstOrDefault();
                     if (check != null)
                     {
-                        //Session["id"] = user.id.ToString();
-                        //Session["name"] = user.name.ToString();
+                        Session["id"] = check.id.ToString();
+                        Session["name"] = check.name.ToString();
                         return RedirectToAction("BookList", "Book");
 
                     }

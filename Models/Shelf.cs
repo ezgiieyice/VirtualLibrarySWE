@@ -14,7 +14,8 @@ namespace DenemeSWE.Models
     
     public partial class Shelf
     {
-        public string F1 { get; set; }
+        public int id { get; set; }
+        public int user_id { get; set; }
         public string book_id { get; set; }
         public string photo { get; set; }
         public string title { get; set; }
@@ -23,6 +24,10 @@ namespace DenemeSWE.Models
         public string subject { get; set; }
         public string category { get; set; }
         public string release_date { get; set; }
-        public byte[] reading_link { get; set; }
+        public string reading_link { get; set; }
+        public Nullable<double> scrollPostion { get; set; }
+    
+        public virtual Books Books { get; set; }
+        public virtual User User { get; set; }
     }
 }

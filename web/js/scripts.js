@@ -52,3 +52,11 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+window.addEventListener("scroll", (event) => {
+    let scroll = this.scrollY;
+    document.getElementById("scroll").innerHTML = scroll;
+    
+    );
+    
+});

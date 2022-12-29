@@ -13,10 +13,10 @@ namespace DenemeSWE.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class IheBookEntities1 : DbContext
+    public partial class IheBookEntities5 : DbContext
     {
-        public IheBookEntities1()
-            : base("name=IheBookEntities1")
+        public IheBookEntities5()
+            : base("name=IheBookEntities5")
         {
         }
     
@@ -26,7 +26,7 @@ namespace DenemeSWE.Models
         }
     
         public virtual DbSet<Books> Books { get; set; }
-        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Shelf> Shelf { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }
